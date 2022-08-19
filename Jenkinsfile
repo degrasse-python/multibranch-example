@@ -4,6 +4,7 @@ pipeline{
   options {
     timeout(time: 10, unit: 'MINUTES')     
   }
+  stages{
   stage('Agent'){
     agent { label 'maven'}
   }
@@ -21,6 +22,7 @@ pipeline{
           println("Building ${j.toString()}")
           load "${j.toString()}"
       }
+    }
   }
 }
 
