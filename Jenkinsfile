@@ -5,34 +5,32 @@ pipeline{
   options {
     timeout(time: 10, unit: 'MINUTES')     
   }
+  stage('Agent'){
+    agent { label 'maven'}
+  }
+  stage('Determine Jenkinsfile to build') {
+      def sout = sh(returnStdout: true, script: 'git diff --name-only origin/master...HEAD')
 
+      def j = findJenkinsfileToRun(sout.split())
 
-    try {
-        stage('Agent'){
-          agent { label 'maven'}
-        }
-        stage('Determine Jenkinsfile to build') {
-            def sout = sh(returnStdout: true, script: 'git diff --name-only origin/master...HEAD')
+      if (j.toString() == "${pwd()}/Jenkinsfile") {
+          println("Building the whole world")
 
-            def j = findJenkinsfileToRun(sout.split())
+          load "Jenkinsfile-build-the-world"
 
-            if (j.toString() == "${pwd()}/Jenkinsfile") {
-                println("Building the whole world")
+      } else {
+          println("Building ${j.toString()}")
+          load "${j.toString()}"
+      }
 
-                load "Jenkinsfile-build-the-world"
-
-            } else {
-                println("Building ${j.toString()}")
-                load "${j.toString()}"
-            }
-
-        }
-        currentBuild.result = 'SUCCESS'
-    } catch (err) {
-        println("ERR: ${err}")
-        currentBuild.result = 'FAILED'
-    }
+  }
+  currentBuild.result = 'SUCCESS'
+  catch (err) {
+  println("ERR: ${err}")
+  currentBuild.result = 'FAILED'
+  }
 }
+
 
 
 @NonCPS
