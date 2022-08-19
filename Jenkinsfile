@@ -88,4 +88,3 @@ def findJenkinsfileToRun(paths) {
         return "${pwd()}/Jenkinsfile"
     }
 }
-}
