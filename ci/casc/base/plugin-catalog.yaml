@@ -1,5 +1,5 @@
-displayName: CloudBees CI Workshop Plugin Catalog
-name: cbci-workshop-catalog
+displayName: CloudBees CI Plugin Catalog
+name: cbci-catalog
 type: plugin-catalog
 version: '1'
 configurations:

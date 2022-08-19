@@ -1,12 +1,8 @@
 jenkins:
-  authorizationStrategy: "cloudBeesRoleBasedAccessControl"
   securityRealm:
     local:
       allowsSignup: false
       enableCaptcha: false
-      users:
-       - id: admin
-         password: "${cbciCjocAdminPassword}"
   systemMessage: "CloudBees Operations Center configured using CloudBees CI CasC"
   views:
   - all:
@@ -31,33 +27,7 @@ security:
         canCustomMapping: false
         canOverride: true
         defaultMappingFactory: "restrictedEquivalentRAMF"
-masterprovisioning:
-  dockerImageDefinitionConfiguration:
-  kubernetes:
-    clusterEndpoints:
-    - id: "default"
-      ingressClass: "nginx"
-      jenkinsUrl: "http://cjoc.cbci.svc.cluster.local/cjoc/"
-      name: "kubernetes"
-    cpus: "1.0"
-    disk: 10
-    fsGroup: "1000"
-    livenessInitialDelaySeconds: 300
-    livenessPeriodSeconds: 10
-    livenessTimeoutSeconds: 10
-    memory: 4096
-    readinessFailureThreshold: 100
-    readinessInitialDelaySeconds: 30
-    readinessTimeoutSeconds: 5
-    storageClassName: "premium-rwo"
-    terminationGracePeriodSeconds: 1200
-    yaml: |-
-      kind: "StatefulSet"
-      spec:
-        template:
-          metadata:
-            labels:
-              networking/allow-internet-access: "true"
+
 tool:
   cloudbeesPluginUsageAnalyzer:
     enabled: true

@@ -6,7 +6,7 @@ items:
   displayName: operations
   name: operations
   filteredRoles:
-  - workshop-admin
+  - admin
   - browse
   items:
   - kind: managedController

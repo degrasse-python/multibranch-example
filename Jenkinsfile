@@ -1,5 +1,10 @@
-node {
 
+
+pipeline{
+  agent none
+  options {
+    timeout(time: 10, unit: 'MINUTES')     
+  }
     def scmvars = checkout(scm)
     def commitHash = scmvars.GIT_COMMIT
     def mavenOptions = "-Drevision=${commitHash}"
@@ -8,6 +13,9 @@ node {
 
 
     try {
+        stage('Agent'){
+          agent { label 'maven'}
+        }
         stage('Determine Jenkinsfile to build') {
             def sout = sh(returnStdout: true, script: 'git diff --name-only origin/master...HEAD')
 
@@ -79,4 +87,5 @@ def findJenkinsfileToRun(paths) {
     } else {
         return "${pwd()}/Jenkinsfile"
     }
+}
 }
