@@ -22,12 +22,6 @@ pipeline{
           println("Building ${j.toString()}")
           load "${j.toString()}"
       }
-
-  }
-  currentBuild.result = 'SUCCESS'
-  catch (err) {
-  println("ERR: ${err}")
-  currentBuild.result = 'FAILED'
   }
 }
 
