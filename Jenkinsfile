@@ -5,11 +5,6 @@ pipeline{
   options {
     timeout(time: 10, unit: 'MINUTES')     
   }
-    def scmvars = checkout(scm)
-    def commitHash = scmvars.GIT_COMMIT
-    def mavenOptions = "-Drevision=${commitHash}"
-
-    env.MAVEN_OPTS="${mavenOptions}"
 
 
     try {
